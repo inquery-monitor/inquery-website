@@ -1,0 +1,33 @@
+{
+  "name": "goblin-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atreeleaf/Goblin-Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atreeleaf/Goblin-Website/issues"
+  },
+  "homepage": "https://github.com/atreeleaf/Goblin-Website#readme",
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "css-loader": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "typescript": "^3.6.2",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7"
+  }
+}
