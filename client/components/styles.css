@@ -1,0 +1,27 @@
+.main-body{
+  background-color:black;
+  flex-grow:10;
+}
+
+.footer{
+  background-color:pink;
+  flex-grow:1;
+}
+
+.header{
+  background-color:green;
+  flex-grow:1;
+  display:flex;
+}
+
+
+
+#main-wrapper{
+  position:absolute;
+  display:flex;
+  height: 100%;
+  width:100%;
+  flex-direction:column;
+  justify-content:center;
+  background-color:white;
+}
