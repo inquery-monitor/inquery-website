@@ -7,9 +7,11 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   entry: './client/index.tsx',
+  watch:true,
   output: {
     path: path.join(__dirname, '/client/dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath:'/client/dist'
   },
   module: {
     rules: [
@@ -23,4 +25,9 @@ module.exports = {
       }
     ]
   },
+  devServer:{
+    publicPath:'/dist/',
+    contentBase: path.join(__dirname,'./client'),
+    hot:true
+  }
 };
