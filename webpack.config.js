@@ -30,6 +30,7 @@ module.exports = {
     port: 8080,
     publicPath:'/dist/',
     contentBase: path.join(__dirname,'./client'),
-    hot:true
+    hot:true,
+    inline:true
   }
 };
