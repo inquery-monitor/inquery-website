@@ -1,14 +1,14 @@
 const AWS = require("aws-sdk")
 AWS.config.update({region:'us-west-1'});
-const dynamodb = new AWS.DynamoDB();
+const db = new AWS.DynamoDB.DocumentClient();
 
-AWS.config.getCredentials((err)=>{
-  if (err) console.log(err.stack);
-  else {
-    console.log('Access key:', AWS.config.credentials.accessKeyId);
-    console.log("Secret access key:", AWS.config.credentials.secretAccessKey);
-  }
-})
+// AWS.config.getCredentials((err)=>{
+//   if (err) console.log(err.stack);
+//   else {
+//     console.log('Access key:', AWS.config.credentials.accessKeyId);
+//     console.log("Secret access key:", AWS.config.credentials.secretAccessKey);
+//   }
+// })
 
 
 
@@ -38,20 +38,15 @@ const userTable = {
 //   testing: 3
 // })
 
-// const newItem = {
-//   Item: {
-//     "UserID" : {
-//       S : "321da"
-//     },
-//     "Data" : {
-//       M : convertedObj
-//     }
-    
-//   },
-//   TableName: "UserData"
-// }
-
+const params = {
+  TableName: "UserData",
+  Key: {
+    UserID: "321da"
+  }
+}
+/*  TEST LAMBDA FUNCTION INVOCATIONS-
 const lambda = new AWS.Lambda();
+
 const lambdaParams = {
   FunctionName: "GMDataProcessing",
   InvocationType: "RequestResponse",
@@ -64,31 +59,30 @@ lambda.invoke(lambdaParams,(err,data) => {
   if (err) console.log (err, err.stack);
   else console.log(data);
 })
+*/
 
 
-
-// dynamodb.getItem(newItem, (err,data)=>{
-//   if (err) console.log(err,err.stack);
-//   else console.log(data)
-// })
-
-// dynamodb.putItem(newItem, (err,data)=>{
-//   if (err) console.log(err,err.stack);
-//   else console.log(data)
-// })
-
-
-// dynamodb.createTable(userTable).promise()
-// .then((data)=>{
-//   console.log('successfully created table', data)
-// })
-// .catch((err)=>{
-//   console.log(err)
-// })
-
-dynamodb.listTables({},(err,data)=>{
+db.get(params, (err,data)=>{
   if (err) console.log(err,err.stack);
   else console.log(data)
 })
 
-module.exports = dynamodb
+
+const updateParams = {
+  TableName: "UserData",
+  Key: { UserID: "321da"},
+  UpdateExpression: 'set #a= :x',
+  ExpressionAttributeNames: {'#a' : 'Data'},
+  ExpressionAttributeValues: {
+    ':x': {hello: 'YESSSSS'},
+  }
+}
+db.update(updateParams, (err,data) => {
+  if (err) console.log(err, err.stack);
+  else console.log(data + 'success')
+})
+
+
+
+
+module.exports = db
