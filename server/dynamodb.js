@@ -33,27 +33,50 @@ const userTable = {
 }
 
 
-const convertedObj = AWS.DynamoDB.Converter.marshall({hello: "World"})
-const newItem = {
-  Key: {
-    "UserID" : {
-      S : "ad0jk2l1n"
-    },
-  },
-  TableName: "UserData"
+// const convertedObj = AWS.DynamoDB.Converter.marshall({
+//   hello: "Almost graduated from codesmith",
+//   testing: 3
+// })
+
+// const newItem = {
+//   Item: {
+//     "UserID" : {
+//       S : "321da"
+//     },
+//     "Data" : {
+//       M : convertedObj
+//     }
+    
+//   },
+//   TableName: "UserData"
+// }
+
+const lambda = new AWS.Lambda();
+const lambdaParams = {
+  FunctionName: "GMDataProcessing",
+  InvocationType: "RequestResponse",
+  Payload: JSON.stringify({UserID: "321da"}),
+  LogType: "None",
 }
 
 
-dynamodb.getItem(newItem, (err,data)=>{
-  if (err) console.log(err,err.stack);
-  else console.log(data)
+lambda.invoke(lambdaParams,(err,data) => {
+  if (err) console.log (err, err.stack);
+  else console.log(data);
 })
+
+
+
+// dynamodb.getItem(newItem, (err,data)=>{
+//   if (err) console.log(err,err.stack);
+//   else console.log(data)
+// })
+
 // dynamodb.putItem(newItem, (err,data)=>{
 //   if (err) console.log(err,err.stack);
 //   else console.log(data)
 // })
 
-dynamodb.getItem
 
 // dynamodb.createTable(userTable).promise()
 // .then((data)=>{
