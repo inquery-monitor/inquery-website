@@ -98,7 +98,7 @@ let params1 = {
   ExpressionAttributeNames: {
       "#Y": "Data",
       '#Z': 'Query',
-      '#A' : 'state'
+      '#A' : 'stte'
   },
   ExpressionAttributeValues: {
       ":y": [{hi:"PersonXYZ",lol: 'Bitchass'}]
@@ -109,13 +109,42 @@ let params1 = {
   UpdateExpression: "SET #Y.#Z.#A = list_append(#Y.#Z.#A,:y)"
 };
 
+let params2 = {
+  TableName: "UserData",
+  ExpressionAttributeNames: {
+    '#Y' : "Data",
+    "#Z" : "State",
+    "#A" : "name"
+  },
+  ExpressionAttributeValues: {
+    ":y" : [{god: "Andrew"}]
+  },
+  Key: {
+    UserID: 'testData'
+  },
+  UpdateExpression: "SET #Y.#Z.#A = :y"
+}
 
 
 
-db.update(params1, (err,data) => {
-  if (err) console.log(err, err.stack);
-  else console.log('success')
-})
+
+
+db.update(params1).promise().then((data)=>{
+console.log('successfuly did it');
+console.log(data);
+}), err => {
+  db.update(params2).promise().then((data)=>{
+    console.log('initialized data')
+  })
+  .catch((e)=>{
+    console.log(e)
+  })
+}
+
+// db.update(params1, (err,data) => {
+//   if (err) console.log(err, err.stack);
+//   else console.log('success')
+// })
 
 
 
