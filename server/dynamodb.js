@@ -64,22 +64,57 @@ lambda.invoke(lambdaParams,(err,data) => {
 
 db.get(params, (err,data)=>{
   if (err) console.log(err,err.stack);
-  else console.log(data)
+  // else console.log(data)
 })
 
 
+
+// params that are coming in will be queryField, fieldName, speed, id.
+// queryField = main object key 
+// fieldName = keys within queryField, with an array of data. 
+
+// check if queryField exists in data object, if not, create it. 
+// check if fieldName exists as a key within data.queryField, if not create it and initialize it to empty array. 
+// push the obj containing {speed, id} into the array.
 const updateParams = {
   TableName: "UserData",
-  Key: { UserID: "321da"},
+  Key: { UserID: "testData"},
   UpdateExpression: 'set #a= :x',
   ExpressionAttributeNames: {'#a' : 'Data'},
   ExpressionAttributeValues: {
-    ':x': {hello: 'YESSSSS'},
+    ':x': {
+      Query:  {
+        state: [{  "speed": 0.4944,
+        "frequency": 1,
+        "time": 1567113437211,
+        "id": "1ls2jzx6vmzf"}]
+    }
+  },
   }
 }
-db.update(updateParams, (err,data) => {
+
+let params1 = {
+  TableName: "UserData",
+  ExpressionAttributeNames: {
+      "#Y": "Data",
+      '#Z': 'Query',
+      '#A' : 'state'
+  },
+  ExpressionAttributeValues: {
+      ":y": [{hi:"PersonXYZ",lol: 'Bitchass'}]
+  },
+  Key: {
+      UserID: 'testData'
+  },
+  UpdateExpression: "SET #Y.#Z.#A = list_append(#Y.#Z.#A,:y)"
+};
+
+
+
+
+db.update(params1, (err,data) => {
   if (err) console.log(err, err.stack);
-  else console.log(data + 'success')
+  else console.log('success')
 })
 
 
