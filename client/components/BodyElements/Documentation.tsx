@@ -3,7 +3,7 @@ import React from 'react';
 
 function Documentation(){
   return(
-    <div className = 'main-body'>
+    <div className = 'documentation-body'>
     Documentation
     </div>
   )

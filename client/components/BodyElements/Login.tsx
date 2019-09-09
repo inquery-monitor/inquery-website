@@ -1,13 +1,13 @@
 import React from 'react';
 
 
-function LoginBody() {
+function Login() {
   return(
-    <div className = 'main-body'>
-    About me 
+    <div className = 'login-body'>
+    Login
     </div>
   )
 }
 
 
-export default LoginBody
+export default Login
