@@ -20,7 +20,6 @@ const createUser = async (req, res, next) => {
     ConditionExpression: 'attribute_not_exists(#d)'
   }
   await db.update(newDataObjParam).promise()
-  res.locals.isFirstOccurence = true; // for first occurence resolvers, we need to skip the appendFieldType middleware - which references res.locals 
   return next()
   } catch(e) { 
     console.log('did not create user');
@@ -36,7 +35,7 @@ const createQueryType =  async (req, res, next) => {
         Key: {UserID:"tang"},
         ExpressionAttributeNames: {
           "#d": "Data",
-          "#t" : "State", // req.body.queryField
+          "#t" : "Country", // req.body.queryField
         },
         ExpressionAttributeValues: {
           ':v' : {}
@@ -61,7 +60,7 @@ const addFieldType = async (req, res, next) => {
       Key: { UserID : "tang"},
       ExpressionAttributeNames: {
         "#d": "Data",
-        "#t": "State", // QueryField
+        "#t": "Country", // QueryField
         "#f": "total_dosage" // FieldName 
       },
       ExpressionAttributeValues: {
@@ -74,6 +73,8 @@ const addFieldType = async (req, res, next) => {
       ConditionExpression: "attribute_not_exists(#d.#t.#f)"
     }
     await db.update(newFieldParams).promise();
+    res.locals.isFirstOccurence = true 
+    // for first occurence resolvers, we need to skip the appendFieldType middleware - which references res.locals 
     return next()
   } catch(e) {
     console.log('unable to add fieldType')
@@ -82,7 +83,7 @@ const addFieldType = async (req, res, next) => {
 }
 
 const appendFieldType = async ( req, res, next) => {
-  if (res.locals.isFirstOccurence){
+  if (res.locals.isFirstOccurence){ // if its a first occurence, skip appending
     return next()
   }
   try{
@@ -90,7 +91,7 @@ const appendFieldType = async ( req, res, next) => {
       TableName: "ResolverData",
       ExpressionAttributeNames: {
           "#d": "Data",
-          '#t': 'State',
+          '#t': 'Country',
           '#f': 'total_dosage'
       },
       ExpressionAttributeValues: {
