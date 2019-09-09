@@ -1,8 +1,18 @@
 import React from 'react'
 
-export default function Header() {
-  const headerTabs = ['Home','About','Documentation','Contact'].map((title)=> {
-    return (<h3 className = 'header-item'>{title}</h3>)
+interface HeaderProps {
+  updateTab: (tab:string)=>void
+}
+
+export default function Header(props: HeaderProps) {
+  const headerTabs = ['Home','About','Documentation','Contact', 'Log In'].map((title,id)=> {
+    return (
+      <h3 
+      className = 'header-item' 
+      key = {title+id} 
+      onClick={()=>{props.updateTab(title)}}
+      >{title}
+      </h3>)
   })
 
 

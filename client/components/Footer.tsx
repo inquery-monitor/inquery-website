@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Footer() {
-  const footerItems = ['Github', 'Team'].map((footerItem) => {
+export default function Footer(props: Object) {
+  const footerItems = ['Github', 'Team'].map((footerItem,id) => {
     return (
-      <p className = 'footer-item'>
+      <p className = 'footer-item' key = {id+footerItem}>
       {footerItem}
       </p>
     )

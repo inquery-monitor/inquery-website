@@ -100,3 +100,7 @@
   justify-content:center;
   background-color:white;
 }
+
+h3.header-item{
+  cursor: pointer;
+}
