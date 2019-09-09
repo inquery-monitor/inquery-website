@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk")
 AWS.config.update({region:'us-west-1'});
 const db = new AWS.DynamoDB.DocumentClient();
+const dynamodb = new AWS.DynamoDB();
 
 // AWS.config.getCredentials((err)=>{
 //   if (err) console.log(err.stack);
@@ -13,7 +14,7 @@ const db = new AWS.DynamoDB.DocumentClient();
 
 
 const userTable = {
-  TableName : "UserData",
+  TableName : "ResolverData",
   KeySchema: [       
       { 
         AttributeName: "UserID", 
@@ -31,6 +32,9 @@ const userTable = {
       WriteCapacityUnits: 1
   }
 }
+
+
+
 
 
 // const convertedObj = AWS.DynamoDB.Converter.marshall({
@@ -100,11 +104,40 @@ Step 5: Append to existing object.
 
 */
 
+// initializing data object for user. ( should do this upon creation )
+const newDataObjParam = {
+  TableName: "ResolverData",
+  Key: { UserID : "toddlet"},
+  ExpressionAttributeNames: {
+    '#d' : "Data",
+  },
+  ExpressionAttributeValues: {
+    ':v' : {}
+  },
+  UpdateExpression: 'set #d = :v',
+  ConditionExpression: 'attribute_not_exists(#d)'
+}
+
+// Params object to add a new QueryName to data if it does not yet exist. --
+const newCustomTypeParam = {
+  TableName: "ResolverData",
+  Key: {UserID:"asd1"},
+  ExpressionAttributeNames: {
+    "#d": "Data",
+    "#t" : "State",
+  },
+  ExpressionAttributeValues: {
+    ':v' : {}
+  },
+  UpdateExpression: "Set #d.#t = :v",
+  ConditionExpression: "attribute_not_exists(#d.#t)"
+}
+
 
 // Params Object to add a new field key to an existing data Oject -- does not work when the queryName has not yet been added. 
 const newFieldParams = {
-  TableName: "UserData",
-  Key: { UserID : "testData"},
+  TableName: "ResolverData",
+  Key: { UserID : "asd1"},
   ExpressionAttributeNames: {
     "#d": "Data",
     "#t": "State", // QueryField
@@ -120,31 +153,17 @@ const newFieldParams = {
   ConditionExpression: "attribute_not_exists(#d.#t.#f)"
 }
 
-// Params object to add a new QueryName to data if it does not yet exist. -- (should happen before the above param ^ )
-const newCustomTypeParam = {
-  TableName: "UserData",
-  Key: {UserID:"testData"},
-  ExpressionAttributeNames: {
-    "#d": "Data",
-    "#t" : "State",
-  },
-  ExpressionAttributeValues: {
-    ':v' : {}
-  },
-  UpdateExpression: "Set #d.#t = :v",
-  ConditionExpression: "attribute_not_exists(#d.#t)"
-}
 
-
+// if everything already exists -- to this one. 
 const existingFieldParams = {
   TableName: "UserData",
   ExpressionAttributeNames: {
-      "#Y": "Data",
+      "#Y": "ResolverData",
       '#Z': 'State',
       '#A': 'total_dosage'
   },
   ExpressionAttributeValues: {
-      ":y": [{hi:"PersonXYZ",lol: 'Bitchass', andrew: "TAAANGG"}] // resolver data object. 
+      ":y": [{hi:"PersonXYZ",lol: 'ayy', andrew: "TAAANGG"}] // resolver data object. 
   },
   Key: {
       UserID: 'testData'
@@ -152,8 +171,8 @@ const existingFieldParams = {
   UpdateExpression: "SET #Y.#Z.#A = list_append(#Y.#Z.#A,:y)"
 };
 
-db.update(existingFieldParams,(err,data) => {
-  if (err) console.log(err);
-  else console.log(data);
-})
+// db.update(existingFieldParams,(err,data) => {
+//   if (err) console.log('err');
+//   else console.log('data');
+// })
 
