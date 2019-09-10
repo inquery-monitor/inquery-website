@@ -19,9 +19,10 @@ const createUser = async (req, res, next) => {
       ':z' : 'aslkdaj'
     },
     UpdateExpression: 'set #d = :v,#f = :z',
-    FilterExpression: 'attribute_not_exists(#d) and attribute_not_exists(#f)'
+    ConditionExpression: 'attribute_not_exists(#d)'
   }
   await db.update(newDataObjParam).promise()
+  console.log('created new user..')
   return next()
   } catch(e) { 
     console.log('did not create user', e);
@@ -36,14 +37,14 @@ const createQueryType =  async (req, res, next) => {
         TableName: "UserData",
         Key: {UserID:"Willaim"},
         ExpressionAttributeNames: {
-          "#d": "Data",
-          "#t" : "Query", // req.body.queryField
+          "#a": "Data",
+          "#b" : "Query", // req.body.queryField
         },
         ExpressionAttributeValues: {
           ':v' : {}
         },
-        UpdateExpression: "Set #d.#t = :v",
-        ConditionExpression: "attribute_not_exists(#d.#t)"
+        UpdateExpression: "Set #a.#b = :v",
+        ConditionExpression: "attribute_not_exists(#a.#b)"
       }
     
         await db.update(newCustomTypeParam).promise()
@@ -61,20 +62,22 @@ const addFieldType = async (req, res, next) => {
       TableName: "UserData",
       Key: { UserID : "Willaim"},
       ExpressionAttributeNames: {
-        "#d": "Data",
-        "#t": "Query", // QueryField
-        "#f": "total_dosage" // FieldName 
+        "#c": "Data",
+        "#d": "Query", // QueryField
+        "#e": "total_dosage" // FieldName 
       },
       ExpressionAttributeValues: {
         ':v' : [{  "speed": 0.4944, // speed
         "frequency": 1,
-        "time": 1567113437211, // time 
+        "time": 156711343701, // time 
         "id": "1ls2jzx6vmzf"}]
       },
-      UpdateExpression : 'Set #d.#t.#f = :v',
-      ConditionExpression: "attribute_not_exists(#d.#t.#f)"
+      UpdateExpression : 'Set #c.#d.#e = :v',
+      ConditionExpression: "attribute_not_exists(#c.#d.#e)",
     }
-    await db.update(newFieldParams).promise();
+   
+    console.log(await db.update(newFieldParams).promise());
+    console.log('first occurence')
     res.locals.isFirstOccurence = true 
     // for first occurence resolvers, we need to skip the appendFieldType middleware - which references res.locals 
     return next()

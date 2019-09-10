@@ -59,22 +59,40 @@ const params = {
 
 
 
-const newCustomTypeParam = {
+const newFieldParams = {
   TableName: "UserData",
-  Key: {UserID:"devon"},
+  Key: { UserID : "Willaim"},
   ExpressionAttributeNames: {
-    "#d": "Data",
-    "#t" : "Query", // req.body.queryField
+    "#c": "Data",
+    "#d": "Query", // QueryField
+    "#e": "total_dosage" // FieldName 
   },
   ExpressionAttributeValues: {
-    ':v' : {}
+    ':v' : [{  "speed": 0.4944, // speed
+    "frequency": 1,
+    "time": 156711343701, // time 
+    "id": "1ls2jzx6vmzf"}]
   },
-  UpdateExpression: "Set #d.#t = :v",
-  ConditionExpression: "attribute_not_exists(#d.#t)"
+  UpdateExpression : 'Set #c.#d.#e = :v',
+  ConditionExpression: "attribute_not_exists(#c.#d.#e)",
 }
 
-db.update(newCustomTypeParam, (err,data) => {
-  if (err) console.log(err);
-  else (console.log(data))
-})
+const newDataObjParam = {
+  TableName: "UserData",
+  Key: { UserID : "Willim"},
+  ExpressionAttributeNames: {
+    '#d' : "Data",
+    '#f' : 'AccessID'
+  },
+  ExpressionAttributeValues: {
+    ':v' : {},
+    ':z' : 'aslkdaj'
+  },
+  UpdateExpression: 'set #d = :v,#f = :z',
+  ConditionExpression: 'attribute_not_exists(#d)'
+}
 
+db.update(newDataObjParam, (err,data) => {
+  if (err) console.log(err);
+  else console.log(data)
+});
