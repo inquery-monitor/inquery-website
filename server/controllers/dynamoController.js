@@ -2,21 +2,32 @@ const AWS = require("aws-sdk")
 AWS.config.update({region:'us-west-1'});
 const db = new AWS.DynamoDB.DocumentClient();
 const dynamodb = new AWS.DynamoDB();
+const bcrypt = require('bcryptjs')
 
 
 const createUser = async (req, res, next) => {
   try {
+
+    const { AccessID } = res.locals.authKeys
+    const hashedKey = await bcrypt
+    .hash(res.locals.authKeys.apiKey, 12)
+    .then(hashedApiKey => {
+      return hashedApiKey
+    })
+    .catch(err => {
+      throw err;
+    })
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
   const newDataObjParam = {
-    TableName: "UserData",
-    Key: { UserID : "Willaim"},
+    TableName: "GraphQLData",
+    Key: { AccessID : AccessID},
     ExpressionAttributeNames: {
       '#d' : "Data",
-      '#f' : 'AccessID'
+      '#f' : 'AccessKey'
     },
     ExpressionAttributeValues: {
       ':v' : {},
-      ':z' : 'aslkdaj'
+      ':z' : hashedKey
     },
     UpdateExpression: 'set #d = :v,#f = :z',
     ConditionExpression: 'attribute_not_exists(#d)'
@@ -34,8 +45,8 @@ const createQueryType =  async (req, res, next) => {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
     try {
       const newCustomTypeParam = {
-        TableName: "UserData",
-        Key: {UserID:"Willaim"},
+        TableName: "GraphQLData",
+        Key: {AccessID:"a9e52a30-d424-11e9-8e73-e5cad6fef332"},
         ExpressionAttributeNames: {
           "#a": "Data",
           "#b" : "Query", // req.body.queryField
@@ -59,8 +70,8 @@ const addFieldType = async (req, res, next) => {
   try {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
     const newFieldParams = {
-      TableName: "UserData",
-      Key: { UserID : "Willaim"},
+      TableName: "GraphQLData",
+      Key: { AccessID : "a9e52a30-d424-11e9-8e73-e5cad6fef332"},
       ExpressionAttributeNames: {
         "#c": "Data",
         "#d": "Query", // QueryField
@@ -93,7 +104,7 @@ const appendFieldType = async ( req, res, next) => {
   }
   try {
     const existingFieldParams = {
-      TableName: "UserData",
+      TableName: "GraphQLData",
       ExpressionAttributeNames: {
           "#d": "Data",
           '#t': 'Query',
@@ -106,7 +117,7 @@ const appendFieldType = async ( req, res, next) => {
           "id": "1ls2jzx6vmzf"}] // resolver data object. 
       },
       Key: {
-          UserID: 'Willaim'
+          AccessID: 'a9e52a30-d424-11e9-8e73-e5cad6fef332'
       },
       UpdateExpression: "SET #d.#t.#f = list_append(#d.#t.#f,:y)"
     };
@@ -126,7 +137,7 @@ try{
   const lambdaParams = {
     FunctionName: "DataProcessing",
     InvocationType: "RequestResponse",
-    Payload: JSON.stringify({UserID: "Willaim"}),
+    Payload: JSON.stringify({AccessID: "a9e52a30-d424-11e9-8e73-e5cad6fef332"}),
     LogType: "None",
   }
   lambda.invoke(lambdaParams,(err,data) => {

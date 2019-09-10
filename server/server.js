@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
  res.sendFile(path.join(__dirname,'../client/index.html'))
 });
 
-app.get('/requestApiKey', apiMiddleware.giveApiKey, apiMiddleware.setApiKey, (req, res) => {
+app.get('/requestApiKey', apiMiddleware.generateAuthKeys, dynamoController.createUser, (req, res) => {
   res.status(200).json(`Your auth keys are ${res.locals.authKeys}`);
 })
 

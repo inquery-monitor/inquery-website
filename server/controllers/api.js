@@ -4,14 +4,15 @@ const bcrypt = require('bcryptjs');
 const uuidV4 = require('uuid/v4');
 const uuidV1 = require('uuid/v1');
 const goblinSecret = fs.readFileSync(path.resolve(__dirname, '../private.pem'));
+const { createUser } = require('./dynamoController.js')
 
 const apiMiddleware = {};
 
-apiMiddleware.giveApiKey = (req, res, next) => {
+apiMiddleware.generateAuthKeys = (req, res, next) => {
   console.log('api key has been given');
   // Everyone can get however many keys they want... we don't discriminate
   // res.status(200).json({ apiKey: uuidV4() });
-  res.locals.authKeys = { apiKey: uuidV4(), accessId: uuidV1() };
+  res.locals.authKeys = { apiKey: String(uuidV4()), accessId: String(uuidV1()) };
   return next();
 }
 
@@ -53,6 +54,7 @@ apiMiddleware.checkApiKey = (req, res, next) => {
     console.log('your key is good');
     return next();
   }
+
   // if () {
   //   throw new Error('API key invalid');
   // }
