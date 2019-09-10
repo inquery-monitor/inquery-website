@@ -113,7 +113,7 @@ const appendFieldType = async ( req, res, next) => {
     await db.update(existingFieldParams).promise()
     return next()
   } catch(e) {
-    console.log('could not append fieldType', e,e.stack);
+    console.log('could not append fieldType', e, e.stack);
     return next()
   }
     // Params Object to add a new field key to an existing data Oject -- does not work when the queryName has not yet been added. 
