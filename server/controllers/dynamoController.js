@@ -64,7 +64,7 @@ const addFieldType = async (req, res, next) => {
       ExpressionAttributeNames: {
         "#c": "Data",
         "#d": "Query", // QueryField
-        "#e": "total_dosage" // FieldName 
+        "#e": "total_manufactured" // FieldName 
       },
       ExpressionAttributeValues: {
         ':v' : [{  "speed": 0.4944, // speed
@@ -97,7 +97,7 @@ const appendFieldType = async ( req, res, next) => {
       ExpressionAttributeNames: {
           "#d": "Data",
           '#t': 'Query',
-          '#f': 'total_dosage'
+          '#f': 'total_manufactured'
       },
       ExpressionAttributeValues: {
           ":y": [{  "speed": 0.4944, // speed

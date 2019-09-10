@@ -10,13 +10,13 @@ const userTable = {
   TableName : "ResolverData",
   KeySchema: [       
       { 
-        AttributeName: "UserID", 
+        AttributeName: "AccessID", 
         KeyType: "HASH", //Partition key
       },
   ],
   AttributeDefinitions: [
       { 
-          AttributeName: "UserID", 
+          AttributeName: "AccessID", 
           AttributeType: "S" 
       },
   ],
@@ -36,9 +36,9 @@ const userTable = {
 // })
 
 const params = {
-  TableName: "UserData",
+  TableName: "Resolver_Data",
   Key: {
-    UserID: "321da"
+    AccessID: "321da"
   }
 }
 //  TEST LAMBDA FUNCTION INVOCATIONS-
@@ -47,7 +47,7 @@ const params = {
 // const lambdaParams = {
 //   FunctionName: "DataProcessing",
 //   InvocationType: "RequestResponse",
-//   Payload: JSON.stringify({UserID: "tang"}),
+//   Payload: JSON.stringify({AccessID: "tang"}),
 //   LogType: "None",
 // }
 
@@ -60,8 +60,8 @@ const params = {
 
 
 const newFieldParams = {
-  TableName: "UserData",
-  Key: { UserID : "Willaim"},
+  TableName: "Resolver_Data",
+  Key: { AccessID : "Willaim"},
   ExpressionAttributeNames: {
     "#c": "Data",
     "#d": "Query", // QueryField
@@ -78,11 +78,11 @@ const newFieldParams = {
 }
 
 const newDataObjParam = {
-  TableName: "UserData",
-  Key: { UserID : "Willim"},
+  TableName: "Resolver_Data",
+  Key: { AccessID : "Willim"},
   ExpressionAttributeNames: {
     '#d' : "Data",
-    '#f' : 'AccessID'
+    '#f' : 'AccessKey'
   },
   ExpressionAttributeValues: {
     ':v' : {},
