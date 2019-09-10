@@ -9,20 +9,22 @@ const createUser = async (req, res, next) => {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
   const newDataObjParam = {
     TableName: "UserData",
-    Key: { UserID : "tang"},
+    Key: { UserID : "Willaim"},
     ExpressionAttributeNames: {
-      '#d' : "AccessID",
+      '#d' : "Data",
+      '#f' : 'AccessID'
     },
     ExpressionAttributeValues: {
-      ':v' : '3hdaishd3'
+      ':v' : {},
+      ':z' : 'aslkdaj'
     },
-    UpdateExpression: 'set #d = :v',
-    ConditionExpression: 'attribute_not_exists(#d)'
+    UpdateExpression: 'set #d = :v,#f = :z',
+    FilterExpression: 'attribute_not_exists(#d) and attribute_not_exists(#f)'
   }
   await db.update(newDataObjParam).promise()
   return next()
   } catch(e) { 
-    console.log('did not create user');
+    console.log('did not create user', e);
     return next()
   }
 }
@@ -32,7 +34,7 @@ const createQueryType =  async (req, res, next) => {
     try {
       const newCustomTypeParam = {
         TableName: "UserData",
-        Key: {UserID:"tang"},
+        Key: {UserID:"Willaim"},
         ExpressionAttributeNames: {
           "#d": "Data",
           "#t" : "Query", // req.body.queryField
@@ -47,7 +49,7 @@ const createQueryType =  async (req, res, next) => {
         await db.update(newCustomTypeParam).promise()
         return next()
     } catch(e) {
-      console.log('did not create query type')
+      console.log('did not create query type', e)
       return next()
     }
 }
@@ -57,7 +59,7 @@ const addFieldType = async (req, res, next) => {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
     const newFieldParams = {
       TableName: "UserData",
-      Key: { UserID : "tang"},
+      Key: { UserID : "Willaim"},
       ExpressionAttributeNames: {
         "#d": "Data",
         "#t": "Query", // QueryField
@@ -101,7 +103,7 @@ const appendFieldType = async ( req, res, next) => {
           "id": "1ls2jzx6vmzf"}] // resolver data object. 
       },
       Key: {
-          UserID: 'tang'
+          UserID: 'Willaim'
       },
       UpdateExpression: "SET #d.#t.#f = list_append(#d.#t.#f,:y)"
     };
@@ -121,7 +123,7 @@ try{
   const lambdaParams = {
     FunctionName: "DataProcessing",
     InvocationType: "RequestResponse",
-    Payload: JSON.stringify({UserID: "tang"}),
+    Payload: JSON.stringify({UserID: "Willaim"}),
     LogType: "None",
   }
   lambda.invoke(lambdaParams,(err,data) => {

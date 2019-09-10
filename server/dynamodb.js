@@ -57,3 +57,24 @@ const params = {
 //   else console.log(data);
 // })
 
+
+
+const newCustomTypeParam = {
+  TableName: "UserData",
+  Key: {UserID:"devon"},
+  ExpressionAttributeNames: {
+    "#d": "Data",
+    "#t" : "Query", // req.body.queryField
+  },
+  ExpressionAttributeValues: {
+    ':v' : {}
+  },
+  UpdateExpression: "Set #d.#t = :v",
+  ConditionExpression: "attribute_not_exists(#d.#t)"
+}
+
+db.update(newCustomTypeParam, (err,data) => {
+  if (err) console.log(err);
+  else (console.log(data))
+})
+
