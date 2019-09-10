@@ -6,10 +6,25 @@ function Documentation(){
     <div className = 'documentation-body'>
       <div id = 'documentation-wrapper'>
         <h3 className = 'documentation-h3'>Getting started guide</h3>
-        <p className = 'documentation-text'>Goblin Monitor is an open-source GraphQL monitoring/analytics tool created in 2019 aimed to improve the developer experience around GraphQL.
-        While GraphQL solves the underfetching and overfetching problem and has this distinct advantage over REST, tradiational restful architecture innately
-        contains predictability, as each endpoint specifically responds.
-        </p>
+        <p className = 'documentation-text'>Note: The current version of GoblinQL is only compatible with Apollo Server and GraphQL Yoga.</p> 
+        <h3 className = 'documentation-h3'>Step 1. Download our package on NPM.</h3>
+          <div className = 'code-snippet'>
+            <p className = 'code-text'>npm i --save-dev goblinql</p>
+          </div>
+        <h3 className = 'documentation-h3'>Step 2. Extract functions from the module.   </h3>
+          <div className = 'code-snippet'>
+            <p className = 'code-text'>const &#123; enableMonitoring, trackErrors &#125;  =  require('goblinql')</p>
+          </div>
+        <h3 className = 'documentation-h3'>Step 3. Pass in your resolvers as an argument to enableMonitoring.</h3>
+          <div className = 'code-snippet'>
+          <p className = 'code-text'>const updatedResolvers = enableMonitoring(resolvers)</p>
+          </div>
+        <h3 className = 'documentation-h3'>Step 4. Start Apollo-Server with updatedResolvers passed in.</h3>
+          <div className = 'code-snippet'>
+          <p className = 'code-text'>const server = new ApolloServer(&#123; typeDefs, updatedResolvers &#125;)</p>
+          <p className = 'code-text'>{'server.listen( ).then( { url } ) => { console.log(`Server is listening at { url }` )})'} </p>
+
+          </div>
       </div>
     </div>
   )
