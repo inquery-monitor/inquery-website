@@ -10,11 +10,39 @@ interface BodyProps {
   currentTab: string;
 }
 
-export default function Body(props: BodyProps) {
-  
- 
+
+export default function Body(props: BodyProps ) {
+  let currentTab;
+  switch (props.currentTab) {
+    case 'Home': {
+      currentTab = <Home/>
+      break;
+    }
+    case 'About': {
+      currentTab = <About/>
+      break;
+    }
+    case 'Documentation': {
+      currentTab = <Documentation/>
+      break;
+    }
+    case 'Contact': {
+      currentTab = <Contact/>
+      break;
+    }
+    case 'Login': {
+      currentTab = <Login/>
+      break;
+    }
+    default: {
+      currentTab = <Home/>
+      break;
+    }
+  }
+
+
 
   return (
-   <Home/>
+   currentTab
   )
 }

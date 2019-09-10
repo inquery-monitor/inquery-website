@@ -2,13 +2,16 @@ import React from 'react'
 
 interface HeaderProps {
   updateTab: (tab:string)=>void
+  currentTab: string
 }
 
 export default function Header(props: HeaderProps) {
-  const headerTabs = ['Home','About','Documentation','Contact', 'Log In'].map((title,id)=> {
+  console.log(props)
+  const headerTabs = ['Home','About','Documentation','Contact', 'Login'].map((title,id)=> {
+    const className = props.currentTab === title ? 'header-item-clicked' : 'header-item'
     return (
       <h3 
-      className = 'header-item' 
+      className = {className}
       key = {title+id} 
       onClick={()=>{props.updateTab(title)}}
       >{title}

@@ -12,10 +12,16 @@ export default function App() {
 
   return (
     <div id='main-wrapper'>
+<<<<<<< HEAD
     <Header updateTab = {updateTab}/>
     <Body currentTab = {currentTab}/>
     <Footer/>
     <Modal></Modal>
+=======
+      <Header updateTab = {updateTab} currentTab = {currentTab}/>
+      <Body currentTab = {currentTab}/>
+      <Footer/>
+>>>>>>> master
     </div>
   )
 }

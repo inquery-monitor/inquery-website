@@ -34,7 +34,17 @@ app.get('/checkJwt', authMiddleware.checkJwt, (req, res) => {
 })
 // app.get('/requestApiKey', apiMiddleware.giveApiKey);
 
+<<<<<<< HEAD
 app.use('/db', dbRouter);
+=======
+app.get('/analytics', (req,res) => {
+  res.sendFile(path.join(__dirname,'../client/dashboard/index.html'))
+})
+
+
+
+app.use('/data',dbRouter);
+>>>>>>> master
 
 
 
