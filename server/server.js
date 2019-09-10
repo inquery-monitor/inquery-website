@@ -5,6 +5,7 @@ const dbRouter = require('./routers/dbRouter.js');
 const apiMiddleware = require('./controllers/api.js');
 const authMiddleware = require('./controllers/auth.js');
 const cookieParser = require('cookie-parser');
+const dynamoController = require('./controllers/dynamoController.js');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -17,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/requestApiKey', apiMiddleware.giveApiKey, apiMiddleware.setApiKey, (req, res) => {
-  res.status(200).json(`Your api key is ${res.locals.apiKey}`);
+  res.status(200).json(`Your auth keys are ${res.locals.authKeys}`);
 })
 
 app.get('/checkApiKey', apiMiddleware.checkApiKey, authMiddleware.setJwt, (req, res) => {
@@ -34,17 +35,14 @@ app.get('/checkJwt', authMiddleware.checkJwt, (req, res) => {
 })
 // app.get('/requestApiKey', apiMiddleware.giveApiKey);
 
-<<<<<<< HEAD
-app.use('/db', dbRouter);
-=======
+// app.use('/db', dbRouter);
 app.get('/analytics', (req,res) => {
   res.sendFile(path.join(__dirname,'../client/dashboard/index.html'))
 })
 
 
 
-app.use('/data',dbRouter);
->>>>>>> master
+app.use('/data', dbRouter);
 
 
 

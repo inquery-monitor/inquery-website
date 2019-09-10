@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const uuidV4 = require('uuid/v4');
+const uuidV1 = require('uuid/v1');
 const goblinSecret = fs.readFileSync(path.resolve(__dirname, '../private.pem'));
 
 const apiMiddleware = {};
@@ -10,7 +11,7 @@ apiMiddleware.giveApiKey = (req, res, next) => {
   console.log('api key has been given');
   // Everyone can get however many keys they want... we don't discriminate
   // res.status(200).json({ apiKey: uuidV4() });
-  res.locals.apiKey = uuidV4();
+  res.locals.authKeys = { apiKey: uuidV4(), accessId: uuidV1() };
   return next();
 }
 
@@ -19,13 +20,13 @@ apiMiddleware.setApiKey = async (req, res, next) => {
   // first, check if a user with the given api key exists
   const users = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../auth-test.json')));
 
-  if (users[res.locals.apiKey]) {
+  if (users[res.locals.authKeys.apiKey]) {
     throw new Error('Api key has already been registered.')
     // return next();
   }
   // add logic to create user
   await bcrypt
-          .hash(res.locals.apiKey, 12)
+          .hash(res.locals.authKeys.apiKey, 12)
           .then(hashedApiKey => {
             // saved hashedApiKey to Dynamo
             console.log('hashed api key is', hashedApiKey, 'res locals api key is', res.locals.apiKey);
@@ -46,7 +47,7 @@ apiMiddleware.checkApiKey = (req, res, next) => {
   console.log('request body inside checkApiKey is', req.body);
   let users = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../auth-test.json')));
 
-  if (!users[req.body.apiKey]) {
+  if (!users[req.body.authKeys.apiKey]) {
     throw new Error('API key is invalid')
   } else {
     console.log('your key is good');

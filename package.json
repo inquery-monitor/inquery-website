@@ -23,13 +23,10 @@
   },
   "homepage": "https://github.com/atreeleaf/Goblin-Website#readme",
   "dependencies": {
-<<<<<<< HEAD
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "jsonwebtoken": "^8.5.1",
-=======
     "aws-sdk": "^2.524.0",
->>>>>>> master
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "uuid": "^3.3.3"

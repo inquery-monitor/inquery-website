@@ -9,7 +9,7 @@ const createUser = async (req, res, next) => {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
   const newDataObjParam = {
     TableName: "UserData",
-    Key: { UserID : "tang"},
+    Key: { UserID : "soroush"},
     ExpressionAttributeNames: {
       '#d' : "AccessID",
     },
@@ -32,7 +32,7 @@ const createQueryType =  async (req, res, next) => {
     try {
       const newCustomTypeParam = {
         TableName: "UserData",
-        Key: {UserID:"tang"},
+        Key: {UserID:"soroush"},
         ExpressionAttributeNames: {
           "#d": "Data",
           "#t" : "Query", // req.body.queryField
@@ -57,7 +57,7 @@ const addFieldType = async (req, res, next) => {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
     const newFieldParams = {
       TableName: "UserData",
-      Key: { UserID : "tang"},
+      Key: { UserID : "soroush"},
       ExpressionAttributeNames: {
         "#d": "Data",
         "#t": "Query", // QueryField
@@ -101,14 +101,14 @@ const appendFieldType = async ( req, res, next) => {
           "id": "1ls2jzx6vmzf"}] // resolver data object. 
       },
       Key: {
-          UserID: 'tang'
+          UserID: 'soroush'
       },
       UpdateExpression: "SET #d.#t.#f = list_append(#d.#t.#f,:y)"
     };
     await db.update(existingFieldParams).promise()
     return next()
   } catch(e) {
-    console.log('could not append fieldType', e,e.stack);
+    console.log('could not append fieldType', e, e.stack);
     return next()
   }
     // Params Object to add a new field key to an existing data Oject -- does not work when the queryName has not yet been added. 
@@ -121,7 +121,7 @@ try{
   const lambdaParams = {
     FunctionName: "DataProcessing",
     InvocationType: "RequestResponse",
-    Payload: JSON.stringify({UserID: "tang"}),
+    Payload: JSON.stringify({UserID: "soroush"}),
     LogType: "None",
   }
   lambda.invoke(lambdaParams,(err,data) => {
