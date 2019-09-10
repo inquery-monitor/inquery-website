@@ -9,20 +9,23 @@ const createUser = async (req, res, next) => {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
   const newDataObjParam = {
     TableName: "UserData",
-    Key: { UserID : "soroush"},
+    Key: { UserID : "Willaim"},
     ExpressionAttributeNames: {
-      '#d' : "AccessID",
+      '#d' : "Data",
+      '#f' : 'AccessID'
     },
     ExpressionAttributeValues: {
-      ':v' : '3hdaishd3'
+      ':v' : {},
+      ':z' : 'aslkdaj'
     },
-    UpdateExpression: 'set #d = :v',
+    UpdateExpression: 'set #d = :v,#f = :z',
     ConditionExpression: 'attribute_not_exists(#d)'
   }
   await db.update(newDataObjParam).promise()
+  console.log('created new user..')
   return next()
   } catch(e) { 
-    console.log('did not create user');
+    console.log('did not create user', e);
     return next()
   }
 }
@@ -32,22 +35,22 @@ const createQueryType =  async (req, res, next) => {
     try {
       const newCustomTypeParam = {
         TableName: "UserData",
-        Key: {UserID:"soroush"},
+        Key: {UserID:"Willaim"},
         ExpressionAttributeNames: {
-          "#d": "Data",
-          "#t" : "Query", // req.body.queryField
+          "#a": "Data",
+          "#b" : "Query", // req.body.queryField
         },
         ExpressionAttributeValues: {
           ':v' : {}
         },
-        UpdateExpression: "Set #d.#t = :v",
-        ConditionExpression: "attribute_not_exists(#d.#t)"
+        UpdateExpression: "Set #a.#b = :v",
+        ConditionExpression: "attribute_not_exists(#a.#b)"
       }
     
         await db.update(newCustomTypeParam).promise()
         return next()
     } catch(e) {
-      console.log('did not create query type')
+      console.log('did not create query type', e)
       return next()
     }
 }
@@ -57,22 +60,24 @@ const addFieldType = async (req, res, next) => {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
     const newFieldParams = {
       TableName: "UserData",
-      Key: { UserID : "soroush"},
+      Key: { UserID : "Willaim"},
       ExpressionAttributeNames: {
-        "#d": "Data",
-        "#t": "Query", // QueryField
-        "#f": "total_dosage" // FieldName 
+        "#c": "Data",
+        "#d": "Query", // QueryField
+        "#e": "total_manufactured" // FieldName 
       },
       ExpressionAttributeValues: {
         ':v' : [{  "speed": 0.4944, // speed
         "frequency": 1,
-        "time": 1567113437211, // time 
+        "time": 156711343701, // time 
         "id": "1ls2jzx6vmzf"}]
       },
-      UpdateExpression : 'Set #d.#t.#f = :v',
-      ConditionExpression: "attribute_not_exists(#d.#t.#f)"
+      UpdateExpression : 'Set #c.#d.#e = :v',
+      ConditionExpression: "attribute_not_exists(#c.#d.#e)",
     }
-    await db.update(newFieldParams).promise();
+   
+    console.log(await db.update(newFieldParams).promise());
+    console.log('first occurence')
     res.locals.isFirstOccurence = true 
     // for first occurence resolvers, we need to skip the appendFieldType middleware - which references res.locals 
     return next()
@@ -92,7 +97,7 @@ const appendFieldType = async ( req, res, next) => {
       ExpressionAttributeNames: {
           "#d": "Data",
           '#t': 'Query',
-          '#f': 'total_dosage'
+          '#f': 'total_manufactured'
       },
       ExpressionAttributeValues: {
           ":y": [{  "speed": 0.4944, // speed
@@ -101,7 +106,7 @@ const appendFieldType = async ( req, res, next) => {
           "id": "1ls2jzx6vmzf"}] // resolver data object. 
       },
       Key: {
-          UserID: 'soroush'
+          UserID: 'Willaim'
       },
       UpdateExpression: "SET #d.#t.#f = list_append(#d.#t.#f,:y)"
     };
@@ -121,7 +126,7 @@ try{
   const lambdaParams = {
     FunctionName: "DataProcessing",
     InvocationType: "RequestResponse",
-    Payload: JSON.stringify({UserID: "soroush"}),
+    Payload: JSON.stringify({UserID: "Willaim"}),
     LogType: "None",
   }
   lambda.invoke(lambdaParams,(err,data) => {

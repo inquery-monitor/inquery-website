@@ -10,13 +10,13 @@ const userTable = {
   TableName : "ResolverData",
   KeySchema: [       
       { 
-        AttributeName: "UserID", 
+        AttributeName: "AccessID", 
         KeyType: "HASH", //Partition key
       },
   ],
   AttributeDefinitions: [
       { 
-          AttributeName: "UserID", 
+          AttributeName: "AccessID", 
           AttributeType: "S" 
       },
   ],
@@ -36,9 +36,9 @@ const userTable = {
 // })
 
 const params = {
-  TableName: "UserData",
+  TableName: "Resolver_Data",
   Key: {
-    UserID: "321da"
+    AccessID: "321da"
   }
 }
 //  TEST LAMBDA FUNCTION INVOCATIONS-
@@ -47,7 +47,7 @@ const params = {
 // const lambdaParams = {
 //   FunctionName: "DataProcessing",
 //   InvocationType: "RequestResponse",
-//   Payload: JSON.stringify({UserID: "tang"}),
+//   Payload: JSON.stringify({AccessID: "tang"}),
 //   LogType: "None",
 // }
 
@@ -57,3 +57,42 @@ const params = {
 //   else console.log(data);
 // })
 
+
+
+const newFieldParams = {
+  TableName: "Resolver_Data",
+  Key: { AccessID : "Willaim"},
+  ExpressionAttributeNames: {
+    "#c": "Data",
+    "#d": "Query", // QueryField
+    "#e": "total_dosage" // FieldName 
+  },
+  ExpressionAttributeValues: {
+    ':v' : [{  "speed": 0.4944, // speed
+    "frequency": 1,
+    "time": 156711343701, // time 
+    "id": "1ls2jzx6vmzf"}]
+  },
+  UpdateExpression : 'Set #c.#d.#e = :v',
+  ConditionExpression: "attribute_not_exists(#c.#d.#e)",
+}
+
+const newDataObjParam = {
+  TableName: "Resolver_Data",
+  Key: { AccessID : "Willim"},
+  ExpressionAttributeNames: {
+    '#d' : "Data",
+    '#f' : 'AccessKey'
+  },
+  ExpressionAttributeValues: {
+    ':v' : {},
+    ':z' : 'aslkdaj'
+  },
+  UpdateExpression: 'set #d = :v,#f = :z',
+  ConditionExpression: 'attribute_not_exists(#d)'
+}
+
+db.update(newDataObjParam, (err,data) => {
+  if (err) console.log(err);
+  else console.log(data)
+});

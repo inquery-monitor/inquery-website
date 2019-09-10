@@ -15,7 +15,7 @@ function Documentation(){
           <div className = 'code-snippet'>
             <p className = 'code-text'>const &#123; enableMonitoring, trackErrors &#125;  =  require('goblinql')</p>
           </div>
-        <h3 className = 'documentation-h3'>Step 3. Pass in your resolvers as an argument to enableMonitoring.</h3>
+        <h3 className = 'documentation-h3'>Step 3. Pass in your resolvers as the first argument to enableMonitoring.</h3>
           <div className = 'code-snippet'>
           <p className = 'code-text'>const updatedResolvers = enableMonitoring(resolvers)</p>
           </div>
@@ -23,7 +23,6 @@ function Documentation(){
           <div className = 'code-snippet'>
           <p className = 'code-text'>const server = new ApolloServer(&#123; typeDefs, updatedResolvers &#125;)</p>
           <p className = 'code-text'>{'server.listen( ).then( { url } ) => { console.log(`Server is listening at { url }` )})'} </p>
-
           </div>
       </div>
     </div>
