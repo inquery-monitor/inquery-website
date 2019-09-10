@@ -15,7 +15,13 @@ app.get('/',(req, res) => {
 })
 
 
-app.use('/db',dbRouter);
+app.get('/analytics', (req,res) => {
+  res.sendFile(path.join(__dirname,'../client/dashboard/index.html'))
+})
+
+
+
+app.use('/data',dbRouter);
 
 
 

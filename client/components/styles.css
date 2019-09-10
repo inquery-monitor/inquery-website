@@ -21,6 +21,25 @@
 }
 
 
+#documentation-wrapper {
+  margin-top:20px;
+  max-width: 70%;
+}
+
+.documentation-text {
+  color:white;
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  line-height: 1.7em;
+}
+
+.documentation-h3{
+  color:white;
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 2em;
+}
+
+
 .contact-body{
   background-color:#292c35;
   flex-grow:14;
@@ -28,12 +47,63 @@
 .documentation-body{
   background-color:#292c35;
   flex-grow:14;
+  display:flex;
+  justify-content:center;
 }
 .login-body{
   background-color:#292c35;
   flex-grow:14;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items:center;
 }
 
+.input-form{ 
+  margin-top: 10px;
+  margin-bottom: 15px;
+  min-width: 200px;
+  min-height: 20px;
+  text-transform: uppercase;
+}
+
+#request-key{
+color:white;
+font-weight:bold;
+margin-bottom:20px;
+min-height: 25px;
+min-width: 200px;
+border-radius: 4px;
+border: 1px solid white;
+background-color: #43485f;
+}
+
+
+
+#modal {
+  background-color:white;
+  min-height: 100px;
+  min-width: 300px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.show{
+  background-color:white;
+  min-height: 100px;
+  min-width: 300px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.hide{
+  background-color:white;
+  min-height: 100px;
+  min-width: 300px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  display:none;
+}
 
 #about-text{
   color:white;
@@ -113,7 +183,7 @@
   flex-grow:1;
   display:flex;
   flex-direction:row;
-  max-height: 80px;
+  max-height: 76px;
 }
 
 

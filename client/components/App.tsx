@@ -11,9 +11,9 @@ export default function App() {
 
   return (
     <div id='main-wrapper'>
-    <Header updateTab = {updateTab} currentTab = {currentTab}/>
-    <Body currentTab = {currentTab}/>
-    <Footer/>
+      <Header updateTab = {updateTab} currentTab = {currentTab}/>
+      <Body currentTab = {currentTab}/>
+      <Footer/>
     </div>
   )
 }
