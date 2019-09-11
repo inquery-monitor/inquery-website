@@ -12,7 +12,7 @@ router.post('/putItem', authMiddleware.checkJwt, dynamo.createQueryType, dynamo.
 
 // reading data 
 router.get('/getItem', authMiddleware.checkJwt, dynamo.readAndFormat, (req,res,next) => {
-res.status(200).send()
+res.status(200).json(res.locals.resolverData)
 })
 
 

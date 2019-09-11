@@ -142,11 +142,9 @@ const readAndFormat = async (req, res, next) => {
       Payload: JSON.stringify({AccessID: AccessID}),
       LogType: "None",
     }
-    lambda.invoke(lambdaParams,(err,data) => {
-      if (err) console.log (err, err.stack);
-      else console.log(data);
-    })
-    
+    const resolverData = await lambda.invoke(lambdaParams).promise()
+    console.log(resolverData)
+    res.locals.resolverData = resolverData;
     return next()
   } catch(e) {
     console.log(e)
