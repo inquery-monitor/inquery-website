@@ -10,7 +10,6 @@ interface BodyProps {
   currentTab: string;
 }
 
-
 export default function Body(props: BodyProps ) {
   let currentTab;
   switch (props.currentTab) {

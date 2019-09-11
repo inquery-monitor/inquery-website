@@ -11,8 +11,8 @@ if (modalStatus === 'show'){
   // make request to create accessID and key from back-end && display on user.. using UseEffect?
 }
 return(
-  <div className = {modalStatus}>
-  Lol
+  <div className={"modal " + modalStatus}>
+    Your Api key is ...
   </div>
 )
 

@@ -5,6 +5,9 @@ function About(){
   return(
     <div className = 'about-body'>
       <div id = 'about-wrapper'>
+        <div id='about-title'>
+          GraphQL with Goblin Monitor
+        </div>
         <p id = 'about-text'>
           Goblin Monitor is an open-source GraphQL monitoring/analytics tool created in 2019 aimed to improve the developer experience around GraphQL.
           <br /><br />

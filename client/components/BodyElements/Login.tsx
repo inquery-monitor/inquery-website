@@ -8,12 +8,13 @@ function Login() {
   const modalStatus = isShown ? 'show' : 'hide'
     return(
       <div className = 'login-body'>
-      <Modal status={isShown}/>
-      <input type = 'text' name = 'accessID' className = 'input-form'placeholder = 'AccessID'/>
-      <input type = 'password' name = 'accessKey' className = 'input-form' placeholder = 'AccessKey'/>
-      <button id="login-button">Login</button>
-      <button id = 'request-key' onClick={show}>Request API Access ID/Key</button>
-
+        <div className='login-wrapper'>
+          <input type = 'text' name = 'accessID' className = 'input-form'placeholder = 'AccessID'/>
+          <input type = 'password' name = 'accessKey' className = 'input-form' placeholder = 'AccessKey'/>
+          <button id="login-button">Login</button>
+          <button id = 'request-key' onClick={show}>Request API Access ID/Key</button>
+          <Modal status={isShown}/>
+        </div>
       </div>
     )
   }
