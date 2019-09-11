@@ -140,7 +140,7 @@ const readAndFormat = async (req, res, next) => {
       FunctionName: "DataProcessing",
       InvocationType: "RequestResponse",
       Payload: JSON.stringify({AccessID: AccessID}),
-      LogType: "None",
+      LogType: "None",   
     }
     const resolverData = await lambda.invoke(lambdaParams).promise()
     console.log(resolverData)
