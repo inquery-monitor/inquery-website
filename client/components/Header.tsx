@@ -7,14 +7,13 @@ interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
   console.log(props)
-  const headerTabs = ['Home','About','Documentation','Contact', 'Login'].map((title,id)=> {
+  const headerTabs = ['Home','About','Documentation','Community', 'Login'].map((title,id)=> {
     const className = props.currentTab === title ? 'header-item-clicked' : 'header-item'
     return (
-      <h3 
-      className = {className}
-      key = {title+id} 
-      onClick={()=>{props.updateTab(title)}}
-      >{title}
+      <h3 className = {className}
+          key = {title+id} 
+          onClick={()=>{props.updateTab(title)}}>
+        {title}
       </h3>)
   })
 
