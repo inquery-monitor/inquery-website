@@ -41,6 +41,7 @@ authMiddleware.checkJwt = async (req, res, next) => {
 
 authMiddleware.checkKeyAndData = async (req, res, next) => {
     const { AccessID, speed, resolverName, queryType, id  }= req.body;
+    console.log(AccessID, speed,resolverName, queryType, id)
     res.locals.resolverData = {AccessID, speed, resolverName, queryType}
     return next();
   }
