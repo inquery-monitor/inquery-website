@@ -1,11 +1,16 @@
 import React from 'react'
 
 export default function Footer(props: Object) {
-  const footerItems = ['Github', 'Team'].map((footerItem,id) => {
+  const footerItems = [
+    ['Github',"https://github.com/goblin-monitoring-graphql/"],
+    ['Team', ""]
+  ].map( (footerItem,id) => {
     return (
-      <p className = 'footer-item' key = {id+footerItem}>
-      {footerItem}
-      </p>
+      <a href={footerItem[1]} style={{"textDecoration": "none"}}>
+        <p className = 'footer-item' key = {id+footerItem[0]}>
+          {footerItem[0]}
+        </p>
+      </a>
     )
   })
   return (

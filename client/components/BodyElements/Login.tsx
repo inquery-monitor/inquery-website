@@ -9,10 +9,11 @@ function Login() {
     return(
       <div className = 'login-body'>
       <Modal status={isShown}/>
-      <button id = 'request-key' onClick={show}>Request API Access ID/Key</button>
       <input type = 'text' name = 'accessID' className = 'input-form'placeholder = 'AccessID'/>
       <input type = 'password' name = 'accessKey' className = 'input-form' placeholder = 'AccessKey'/>
-      <button>Login</button>
+      <button id="login-button">Login</button>
+      <button id = 'request-key' onClick={show}>Request API Access ID/Key</button>
+
       </div>
     )
   }

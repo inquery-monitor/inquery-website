@@ -6,7 +6,7 @@ function Documentation(){
     <div className = 'documentation-body'>
       <div id = 'documentation-wrapper'>
         <h3 className = 'documentation-h3'>Getting started guide</h3>
-        <p className = 'documentation-text'>Note: The current version of GoblinQL is only compatible with Apollo Server and GraphQL Yoga.</p> 
+        <p className = 'documentation-text'><i>Note: The current version of GoblinQL is only compatible with Apollo Server and GraphQL Yoga.</i></p> 
         <h3 className = 'documentation-h3'>Step 1. Download our package on NPM.</h3>
           <div className = 'code-snippet'>
             <p className = 'code-text'>npm i --save-dev goblinql</p>
