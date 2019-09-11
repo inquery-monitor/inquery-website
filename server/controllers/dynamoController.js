@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs')
 
 const createUser = async (req, res, next) => {
   try {
-    const { AccessID } = res.locals.resolverData
+    const AccessID  = res.locals.authKeys.accessId
     const hashedKey = await bcrypt
     .hash(res.locals.authKeys.apiKey, 12)
     .then(hashedApiKey => {
