@@ -2,17 +2,20 @@ import React from 'react';
 
 interface ModalProps {
   status: boolean;
+  apiData: {
+    apiKey: string,
+    accessId: string 
+  };
 }
 
 function Modal(props: ModalProps) {
 const modalStatus = props.status ? 'show' : 'hide'
-console.log('re-render')
-if (modalStatus === 'show'){
-  // make request to create accessID and key from back-end && display on user.. using UseEffect?
-}
+const { apiKey , accessId } = props.apiData
+
 return(
   <div className = {modalStatus}>
-  Lol
+  <p style = {{fontSize: 12, color: 'blue'}}>AccessID = {accessId}</p>
+  <p style = {{fontSize: 12, color: 'red'}}>ApiKey = {apiKey}</p>
   </div>
 )
 

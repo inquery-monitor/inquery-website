@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Header from './header';
 import Body from './body';
 import Footer from './footer';
-import Modal from './Modals/Modal';
 
 
 
