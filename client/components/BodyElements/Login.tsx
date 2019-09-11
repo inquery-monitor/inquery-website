@@ -3,7 +3,10 @@ import Modal from '../Modal'
 
 function Login() {
   const [isShown, flipModal] = useState(false);
-  const [apiData, updateData] = useState({accessId:'', apiKey: ''})
+  const [apiData,updateData] = useState({apiKey:'',accessId:''})
+  const [accessID,updateAccessId] = useState('')
+  const [apiKey,updateApiKey] = useState('')
+
   const hide = () => flipModal(false);
   const showAndFetch = () => {
     fetch('/requestApiKey')
@@ -14,18 +17,23 @@ function Login() {
     })
     // make a fetch request here to our server. 
     };
+  
+  const updateAccessDetails = (e) => {
+    updateAccessId(e.target.value)
+  }
 
-    useEffect(()=>{
+  const updateApiKeyDetails = (e) => {
+    updateApiKey(e.target.value)
+  }
 
-    })
-
+  console.log(accessID, apiKey);
   const modalStatus = isShown ? 'show' : 'hide'
     return(
       <div className = 'login-body'>
       <Modal status={isShown} apiData = {apiData}/>
       <button id = 'request-key' onClick={showAndFetch}>Request API Access ID/Key</button>
-      <input type = 'text' name = 'accessID' className = 'input-form'placeholder = 'AccessID'/>
-      <input type = 'password' name = 'accessKey' className = 'input-form' placeholder = 'AccessKey'/>
+      <input type = 'text' name = 'accessID' className = 'input-form'placeholder = 'AccessID' onChange={updateAccessDetails}/>
+      <input type = 'password' name = 'accessKey' className = 'input-form' placeholder = 'AccessKey' onChange = {updateApiKeyDetails}/>
       <button>Login</button>
       </div>
     )
