@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs')
 
 const createUser = async (req, res, next) => {
   try {
-    const AccessID = res.locals.authKeys.accessId
+    const { AccessID } = res.locals.resolverData
     const hashedKey = await bcrypt
     .hash(res.locals.authKeys.apiKey, 12)
     .then(hashedApiKey => {
@@ -42,14 +42,15 @@ const createUser = async (req, res, next) => {
 
 const createQueryType =  async (req, res, next) => {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
-    const AccessID = res.locals.AccessID;
+    const { AccessID, queryType } = res.locals.resolverData
+
     try {
       const newCustomTypeParam = {
         TableName: "GraphQLData",
         Key: {AccessID: AccessID},
         ExpressionAttributeNames: {
           "#a": "Data",
-          "#b" : "Query", // req.body.queryField
+          "#b" : queryType, // req.body.queryField
         },
         ExpressionAttributeValues: {
           ':v' : {}
@@ -67,7 +68,7 @@ const createQueryType =  async (req, res, next) => {
 }
 
 const addFieldType = async (req, res, next) => {
-  const AccessID = res.locals.AccessID;
+    const { AccessID, queryType, resolverName, speed, id } = res.locals.resolverData
   try {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
     const newFieldParams = {
@@ -75,14 +76,14 @@ const addFieldType = async (req, res, next) => {
       Key: { AccessID : AccessID},
       ExpressionAttributeNames: {
         "#c": "Data",
-        "#d": "Query", // QueryField
-        "#e": "total_manufactured" // FieldName 
+        "#d": queryType, // QueryField
+        "#e": resolverName // FieldName 
       },
       ExpressionAttributeValues: {
-        ':v' : [{  "speed": 0.4944, // speed
+        ':v' : [{  "speed": speed, // speed
         "frequency": 1,
-        "time": 156711343701, // time 
-        "id": "1ls2jzx6vmzf"}]
+        "time": Date.now(), // time 
+        "id": id}]
       },
       UpdateExpression : 'Set #c.#d.#e = :v',
       ConditionExpression: "attribute_not_exists(#c.#d.#e)",
@@ -100,7 +101,7 @@ const addFieldType = async (req, res, next) => {
 }
 
 const appendFieldType = async ( req, res, next) => {
-  const AccessID = res.locals.AccessID;
+    const { AccessID, queryType, resolverName, speed, id } = res.locals.resolverData
   if (res.locals.isFirstOccurence){ // if its a first occurence, skip appending
     return next()
   }
@@ -109,14 +110,14 @@ const appendFieldType = async ( req, res, next) => {
       TableName: "GraphQLData",
       ExpressionAttributeNames: {
           "#d": "Data",
-          '#t': 'Query',
-          '#f': 'total_manufactured'
+          '#t': queryType,
+          '#f': resolverName
       },
       ExpressionAttributeValues: {
-          ":y": [{  "speed": 0.4944, // speed
+          ":y": [{  "speed": speed, // speed
           "frequency": 1,
-          "time": 1567113437211, // time 
-          "id": "1ls2jzx6vmzf"}] // resolver data object. 
+          "time": Date.now(), // time 
+          "id": id}] // resolver data object. 
       },
       Key: {
           AccessID: AccessID

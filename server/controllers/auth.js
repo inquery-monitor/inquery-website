@@ -38,4 +38,11 @@ authMiddleware.checkJwt = async (req, res, next) => {
   return next();
 }
 
+
+authMiddleware.checkKeyAndData = async (req, res, next) => {
+    const { AccessID, speed, resolverName, queryType, id  }= req.body;
+    res.locals.resolverData = {AccessID, speed, resolverName, queryType}
+    return next();
+  }
+
 module.exports = authMiddleware;
