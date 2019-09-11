@@ -3,7 +3,7 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const uuidV4 = require('uuid/v4');
 const bcrypt = require('bcryptjs');
-// const goblinSecret = fs.readFileSync(path.resolve(__dirname, '../private.pem'));
+const goblinSecret = fs.readFileSync(path.resolve(__dirname, '../private.pem'));
 
 const authMiddleware = {};
 

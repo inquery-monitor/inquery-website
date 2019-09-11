@@ -3,7 +3,7 @@ const path = require('path');
 const bcrypt = require('bcryptjs');
 const uuidV4 = require('uuid/v4');
 const uuidV1 = require('uuid/v1');
-// const goblinSecret = fs.readFileSync(path.resolve(__dirname, '../private.pem'));
+const goblinSecret = fs.readFileSync(path.resolve(__dirname, '../private.pem'));
 const { createUser } = require('./dynamoController.js')
 
 const apiMiddleware = {};
