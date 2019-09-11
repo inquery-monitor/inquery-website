@@ -25,16 +25,36 @@ function Login() {
   const updateApiKeyDetails = (e) => {
     updateApiKey(e.target.value)
   }
+  const login = (accessID,apiKey) => {
+    console.log('logging in')
+    fetch('/checkApiKey', {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      redirect: 'follow',
+      body: JSON.stringify({accessId: accessID, apiKey: apiKey})
+    })
+    .then((response)=>{
+        if (response.status === 301){
+          document.location.replace('/analytics')
+        }
+    })
+    .catch((e)=>{
+      console.log(e)
+    })
+    
+  }
 
   console.log(accessID, apiKey);
   const modalStatus = isShown ? 'show' : 'hide'
     return(
       <div className = 'login-body'>
-      <Modal status={isShown} apiData = {apiData}/>
-      <button id = 'request-key' onClick={showAndFetch}>Request API Access ID/Key</button>
-      <input type = 'text' name = 'accessID' className = 'input-form'placeholder = 'AccessID' onChange={updateAccessDetails}/>
-      <input type = 'password' name = 'accessKey' className = 'input-form' placeholder = 'AccessKey' onChange = {updateApiKeyDetails}/>
-      <button>Login</button>
+        <Modal status={isShown} apiData = {apiData}/>
+        <button id = 'request-key' onClick={showAndFetch}>Request API Access ID/Key</button>
+        <input type = 'text' name = 'accessID' className = 'input-form'placeholder = 'AccessID' onChange={updateAccessDetails}/>
+        <input type = 'password' name = 'accessKey' className = 'input-form' placeholder = 'AccessKey' onChange = {updateApiKeyDetails}/>
+        <button onClick = {()=>login(accessID,apiKey)}>Login</button>
       </div>
     )
   }

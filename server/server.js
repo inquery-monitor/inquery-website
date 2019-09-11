@@ -21,8 +21,9 @@ app.get('/requestApiKey', apiMiddleware.generateAuthKeys, dynamoController.creat
   res.status(200).json(res.locals.authKeys);
 })
 
-app.get('/checkApiKey', dynamoController.checkApiKey, authMiddleware.setJwt, (req, res) => {
-  res.status(200).json(res.locals.jwt);
+app.post('/checkApiKey', dynamoController.checkApiKey, authMiddleware.setJwt, (req, res) => {
+  console.log('redirecting before setting 301 status at end of middleware')
+  res.status(301).send()
 })
 
 app.get('/checkJwt', authMiddleware.checkJwt, (req, res) => {
@@ -33,10 +34,12 @@ app.get('/checkJwt', authMiddleware.checkJwt, (req, res) => {
     res.status(403).json('your jwt is invalid');
   }
 })
-// app.get('/requestApiKey', apiMiddleware.giveApiKey);
 
-// app.use('/db', dbRouter);
+
+
+
 app.get('/analytics', (req,res) => {
+  console.log('analytics hit.')
   res.sendFile(path.join(__dirname,'../client/dashboard/index.html'))
 })
 
