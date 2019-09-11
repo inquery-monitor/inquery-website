@@ -9,12 +9,8 @@ const authMiddleware = {};
 
 // verifies an API key against DB and sends jwt as cookie
 authMiddleware.setJwt = (req, res, next) => {
-  // if (req.body.apiKey === /* some api key in Dynamo*/) {
-  //   let token = jwt.sign({ accessId: uuidV4() }, goblinSecret, { expiresIn: '1h'}, { algorithm: 'HS256' });
-  //   res.locals.jwt = token;
-  //   return next();
-  // }
-  let token = jwt.sign({ test: "jwt" }, goblinSecret, { expiresIn: '2 days'}, { algorithm: 'HS256' });
+  const { accessId, apiKey } = req.body
+  let token = jwt.sign({ AccessID: accessId }, goblinSecret, { expiresIn: '2 days'}, { algorithm: 'HS256' });
   res.cookie('jwt', String(token));
   res.locals.jwt = token;
   console.log('cookie has been set', token);
@@ -23,39 +19,22 @@ authMiddleware.setJwt = (req, res, next) => {
 
 authMiddleware.checkJwt = async (req, res, next) => {
   console.log('checking jwt cookie!', req.cookies);
-  // const authHeader = req.get('Authorization');
-  // console.log('here the header', authHeader);
-  // if (!authHeader) {
-  //   req.isAuth = false;
-  //   return next();
-  // }
-
-  // const token = authHeader.split(' ')[1];
-  // if (!token || token === '') {
-  //   req.isAuth = false;
-  //   return next();
-  // }
-
-  // check cookie for jwt
+  
   let decodedToken;
   try {
     decodedToken = await jwt.verify(req.cookies.jwt, goblinSecret);
   } catch(e) {
-    req.isAuth = false;
-    return next();
+    return res.status(400).send('Unable to verify jwt.');
   }
-
   // if cookie doesn't exist, not authorized
   if (!decodedToken) {
-    req.isAuth = false;
-    return next();
+    return res.status(400).send('Unable to verify jwt.');
   }
-
   // if cookie exists and matches against server-side secret, you are authorized
-  req.isAuth = true;
-  
-  //
-  req.accessId = decodedToken.accessID;
+
+
+  res.locals.AccessID = decodedToken.AccessID;
+  console.log(res.locals.AccessID);
   return next();
 }
 

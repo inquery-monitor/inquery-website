@@ -18,11 +18,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/requestApiKey', apiMiddleware.generateAuthKeys, dynamoController.createUser, (req, res) => {
-  res.status(200).json(`Your auth keys are ${res.locals.authKeys}`);
+  res.status(200).json(res.locals.authKeys);
 })
 
-app.get('/checkApiKey', apiMiddleware.checkApiKey, authMiddleware.setJwt, (req, res) => {
-  res.status(200).json(`here have a cookie ${res.locals.jwt}`);
+app.get('/checkApiKey', dynamoController.checkApiKey, authMiddleware.setJwt, (req, res) => {
+  res.status(200).json(res.locals.jwt);
 })
 
 app.get('/checkJwt', authMiddleware.checkJwt, (req, res) => {

@@ -44,20 +44,8 @@ apiMiddleware.setApiKey = async (req, res, next) => {
 }
 
 apiMiddleware.checkApiKey = (req, res, next) => {
-  // check if user's api key exists in Dynamo
-  console.log('request body inside checkApiKey is', req.body);
-  let users = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../auth-test.json')));
 
-  if (!users[req.body.authKeys.apiKey]) {
-    throw new Error('API key is invalid')
-  } else {
-    console.log('your key is good');
-    return next();
-  }
-
-  // if () {
-  //   throw new Error('API key invalid');
-  // }
+  
   
   // const apiKeyExists = await bcrypt.compare(req.body.apiKey, );
   // if (!apiKeyExists) {

@@ -7,8 +7,7 @@ const bcrypt = require('bcryptjs')
 
 const createUser = async (req, res, next) => {
   try {
-
-    const { AccessID } = res.locals.authKeys
+    const AccessID = res.locals.authKeys.accessId
     const hashedKey = await bcrypt
     .hash(res.locals.authKeys.apiKey, 12)
     .then(hashedApiKey => {
@@ -43,10 +42,11 @@ const createUser = async (req, res, next) => {
 
 const createQueryType =  async (req, res, next) => {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
+    const AccessID = res.locals.AccessID;
     try {
       const newCustomTypeParam = {
         TableName: "GraphQLData",
-        Key: {AccessID:"a9e52a30-d424-11e9-8e73-e5cad6fef332"},
+        Key: {AccessID: AccessID},
         ExpressionAttributeNames: {
           "#a": "Data",
           "#b" : "Query", // req.body.queryField
@@ -67,11 +67,12 @@ const createQueryType =  async (req, res, next) => {
 }
 
 const addFieldType = async (req, res, next) => {
+  const AccessID = res.locals.AccessID;
   try {
     // AWS SDK for DynamoDB takes a param object before executing queries - - 
     const newFieldParams = {
       TableName: "GraphQLData",
-      Key: { AccessID : "a9e52a30-d424-11e9-8e73-e5cad6fef332"},
+      Key: { AccessID : AccessID},
       ExpressionAttributeNames: {
         "#c": "Data",
         "#d": "Query", // QueryField
@@ -99,6 +100,7 @@ const addFieldType = async (req, res, next) => {
 }
 
 const appendFieldType = async ( req, res, next) => {
+  const AccessID = res.locals.AccessID;
   if (res.locals.isFirstOccurence){ // if its a first occurence, skip appending
     return next()
   }
@@ -117,7 +119,7 @@ const appendFieldType = async ( req, res, next) => {
           "id": "1ls2jzx6vmzf"}] // resolver data object. 
       },
       Key: {
-          AccessID: 'a9e52a30-d424-11e9-8e73-e5cad6fef332'
+          AccessID: AccessID
       },
       UpdateExpression: "SET #d.#t.#f = list_append(#d.#t.#f,:y)"
     };
@@ -131,28 +133,56 @@ const appendFieldType = async ( req, res, next) => {
 }
 
 const readAndFormat = async (req, res, next) => {
-
-try{
-  const lambda = new AWS.Lambda();
-  const lambdaParams = {
-    FunctionName: "DataProcessing",
-    InvocationType: "RequestResponse",
-    Payload: JSON.stringify({AccessID: "a9e52a30-d424-11e9-8e73-e5cad6fef332"}),
-    LogType: "None",
+  const AccessID = res.locals.AccessID;
+  try{
+    const lambda = new AWS.Lambda();
+    const lambdaParams = {
+      FunctionName: "DataProcessing",
+      InvocationType: "RequestResponse",
+      Payload: JSON.stringify({AccessID: AccessID}),
+      LogType: "None",
+    }
+    lambda.invoke(lambdaParams,(err,data) => {
+      if (err) console.log (err, err.stack);
+      else console.log(data);
+    })
+    
+    return next()
+  } catch(e) {
+    console.log(e)
+    console.log('unable to read data')
+    return next()
   }
-  lambda.invoke(lambdaParams,(err,data) => {
-    if (err) console.log (err, err.stack);
-    else console.log(data);
-  })
-  
-  return next()
-} catch(e) {
-  console.log(e)
-  console.log('unable to read data')
-  return next()
 }
 
 
+const checkApiKey = async (req,res,next) => {
+  const AccessID = req.body.accessId;
+  const accessKey = req.body.apiKey;
+  let hashedPassword;
+  try {
+    const apiKeyParams = {
+      TableName :'GraphQLData',
+      Key: {
+        AccessID: AccessID
+      }
+    }
+    const user = await db.get(apiKeyParams).promise()
+    hashedPassword = user.Item.AccessKey;
+    console.log(hashedPassword);
+  } catch(e) {
+    return res.send('Your AccessID and/or AccessKey are/is incorrect')
+  }
+  try {
+    const accessKeyExists = await bcrypt.compare(accessKey, hashedPassword);
+    console.log('accessKey is:', accessKey, 'accessKeyExists is:', accessKeyExists)
+    if (!accessKeyExists) {
+      return res.send('Your AccessID and/or AccessKey are/is incorrect');
+    }
+    return next();
+  } catch(e) {
+    console.log('error checking passwords against Dynamo', e);
+  }
 }
 
 module.exports = {
@@ -160,5 +190,6 @@ module.exports = {
   createQueryType,
   addFieldType,
   appendFieldType,
-  readAndFormat
+  readAndFormat,
+  checkApiKey
 }
