@@ -2,14 +2,13 @@ import React from 'react'
 import Home from './BodyElements/Home'
 import About from './BodyElements/About';
 import Documentation from './BodyElements/Documentation';
-import Contact from './BodyElements/Contact';
+import Community from './BodyElements/Community';
 import Login from './BodyElements/Login';
 
 
 interface BodyProps {
   currentTab: string;
 }
-
 
 export default function Body(props: BodyProps ) {
   let currentTab;
@@ -26,8 +25,8 @@ export default function Body(props: BodyProps ) {
       currentTab = <Documentation/>
       break;
     }
-    case 'Contact': {
-      currentTab = <Contact/>
+    case 'Community': {
+      currentTab = <Community/>
       break;
     }
     case 'Login': {

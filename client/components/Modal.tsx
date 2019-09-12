@@ -13,7 +13,8 @@ const modalStatus = props.status ? 'show' : 'hide'
 const { apiKey , accessId } = props.apiData
 
 return(
-  <div className = {modalStatus}>
+  
+  <div className = {"modal " + modalStatus}>
   <p style = {{fontSize: 12, color: 'blue'}}>AccessID = {accessId}</p>
   <p style = {{fontSize: 12, color: 'red'}}>ApiKey = {apiKey}</p>
   </div>
