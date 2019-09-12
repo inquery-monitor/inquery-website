@@ -4,7 +4,7 @@ import React from 'react'
 function Home(){
   return (
     <div className='main-body'>
-  <img src = 'https://raw.githubusercontent.com/rohan-varma/rohan-blog/gh-pages/images/graphql.png' id = 'graph-ql'></img>
+  <img src = './assets/inquery_logo.png' id = 'graph-ql'></img>
   <h3 id = 'main-description'>inQuery</h3>
   <h3 id = 'sub-description'>Realtime GraphQL endpoint analytics.</h3>
   <div id = 'action-buttons-wrapper'>
