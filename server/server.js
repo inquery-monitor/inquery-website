@@ -33,6 +33,9 @@ app.get('/analytics', (req, res) => {
   res.sendFile(path.join(__dirname,'../client/dashboard/index.html'))
 })
 
+app.get('/logout', (req, res) => {
+  res.clearCookie('jwt').redirect('/');
+})
 // Handle data requests.
 app.use('/data', dbRouter);
 

@@ -11,7 +11,7 @@ const authMiddleware = {};
 authMiddleware.setJwt = (req, res, next) => {
   const { accessId, apiKey } = req.body
   let token = jwt.sign({ AccessID: accessId }, goblinSecret, { expiresIn: '2 days'}, { algorithm: 'HS256' });
-  res.cookie('jwt', String(token));
+  res.cookie('jwt', String(token), { httpOnly: true });
   res.locals.jwt = token;
   console.log('cookie has been set', token);
   return next();
@@ -24,11 +24,11 @@ authMiddleware.checkJwt = async (req, res, next) => {
   try {
     decodedToken = await jwt.verify(req.cookies.jwt, goblinSecret);
   } catch(e) {
-    return res.status(400).send('Unable to verify jwt.');
+    return res.status(400).redirect('/');
   }
   // if cookie doesn't exist, not authorized
   if (!decodedToken) {
-    return res.status(400).send('Unable to verify jwt.');
+    return res.status(400).redirect('/');
   }
   // if cookie exists and matches against server-side secret, you are authorized
 
