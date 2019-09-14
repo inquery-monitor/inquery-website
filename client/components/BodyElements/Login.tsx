@@ -9,11 +9,16 @@ function Login() {
 
   const hide = () => flipModal(false);
   const showAndFetch = () => {
+    console.log('show&fetch fired off');
     fetch('/requestApiKey')
     .then((keys)=>keys.json())
     .then((jsonKeys)=>{
+      console.log(jsonKeys);
+      console.log('got the jsonkeys')
       updateData(jsonKeys)
        flipModal(true)
+    }).catch((e)=>{ 
+      console.log(e)
     })
     // make a fetch request here to our server. 
     };

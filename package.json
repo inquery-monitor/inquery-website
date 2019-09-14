@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "start": "node server/server.js",
-    "dev": "webpack-dev-server --open --inline --hot --progress --colors --watch --content-base & node server/server.js ",
+    "dev": "webpack-dev-server --open --inline --hot --progress --colors --watch --content-base",
     "docker-dev": "docker-compose -f docker-compose-dev-hot.yml up & open http://localhost:8080",
-    "docker-prod": "docker run -p 3000:3000 goblinql"
+    "docker-prod": "docker run -p 3000:3000 inquery-website"
   },
   "repository": {
     "type": "git",
@@ -26,14 +26,13 @@
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "jsonwebtoken": "^8.5.1",
-    "aws-sdk": "^2.524.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
-    "aws-sdk": "^2.525.0",
+    "aws-sdk": "^2.528.0",
     "bcrypt": "^3.0.6",
     "css-loader": "^3.2.0",
     "express": "^4.17.1",

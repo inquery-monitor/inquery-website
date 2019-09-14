@@ -10,9 +10,11 @@ export default function App() {
   
 
   return (
-    <div id='main-wrapper'>
+    <div>
       <Header updateTab = {updateTab} currentTab = {currentTab}/>
-      <Body currentTab = {currentTab}/>
+      <div id='main-wrapper'>
+        <Body currentTab = {currentTab}/>
+      </div>
       <Footer/>
     </div>
   )

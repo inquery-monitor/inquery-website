@@ -16,7 +16,7 @@ return(
 
   <div className = {"modal " + modalStatus}>
   <p style = {{fontSize: 14, color: '#ababab'}}>AccessID----{accessId}</p>
-  <p style = {{fontSize: 14, color: '#47a2f0'}}>ApiKey----{apiKey}</p>
+  <p style = {{fontSize: 14, color: '#47a2f0'}}>AccessKey----{apiKey}</p>
   </div>
 )
 

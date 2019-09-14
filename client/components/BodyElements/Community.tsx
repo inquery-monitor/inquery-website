@@ -6,7 +6,7 @@ function Community(){
   const communityInfo: Array<object> = [
     {
       'title': 'GitHub',
-      'textHTML': 'GoblinQL Monitor is in active development.  Check out <a class=\'link\' href=\'https://github.com/goblin-monitoring-graphql/\'>the repository</a> at GitHub.com.'
+      'textHTML': 'inQuery monitor is in active development.  Check out <a class=\'link\' href=\'https://github.com/inquery-monitor/inquery-monitor-npm\'>the repository</a> at GitHub.com.'
     }
   ];
 

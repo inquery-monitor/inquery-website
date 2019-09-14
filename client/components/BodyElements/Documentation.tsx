@@ -7,14 +7,14 @@ function Documentation(){
     <div className = 'documentation-body'>
       <div id = 'documentation-wrapper'>
         <h3 className = 'documentation-h3' style={{'font-size': '1.5em'}}>Getting started guide</h3>
-        <p className = 'documentation-text'><i>Note: The current version of GoblinQL is only compatible with Apollo Server and GraphQL Yoga.</i></p> 
+        <p className = 'documentation-text'><i>Note: The current version of inQuery is only compatible with Apollo Server and GraphQL Yoga.</i></p> 
         <h3 className = 'documentation-h3'>Step 1: Download our package on NPM.</h3>
           <div className = 'code-snippet'>
-            <p className = 'code-text'>npm i --save-dev inquery</p>
+            <p className = 'code-text'>npm i --save-dev inquery-monitor</p>
           </div>
         <h3 className = 'documentation-h3'>Step 2: Extract functions from the module.   </h3>
           <div className = 'code-snippet'>
-            <p className = 'code-text'><span style={{color:'rgb(175, 81, 188)'}}>const</span> &#123; <span style = {{color:'rgb(228, 69, 113)'}}>enableMonitoring</span>, <span style = {{color:'rgb(228, 69, 113)'}}>trackErrors</span> &#125;  =  <span style = {{color:'rgb(228, 69, 113)'}}>require</span>('goblinql')</p>
+            <p className = 'code-text'><span style={{color:'rgb(175, 81, 188)'}}>const</span> &#123; <span style = {{color:'rgb(228, 69, 113)'}}>enableMonitoring</span>, <span style = {{color:'rgb(228, 69, 113)'}}>trackErrors</span> &#125;  =  <span style = {{color:'rgb(228, 69, 113)'}}>require</span>('inquery-monitor')</p>
           </div>
         <h3 className = 'documentation-h3'>Step 3: Pass in your resolvers as the first argument to enableMonitoring.</h3>
           <div className = 'code-snippet'>
