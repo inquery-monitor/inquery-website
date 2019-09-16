@@ -8,17 +8,18 @@ import Login from './BodyElements/Login';
 
 interface BodyProps {
   currentTab: string;
+  updateTab: () => void
 }
 
 export default function Body(props: BodyProps ) {
   let currentTab;
   switch (props.currentTab) {
     case 'Home': {
-      currentTab = <Home/>
+      currentTab = <Home updateTab = {props.updateTab}/>
       break;
     }
     case 'About': {
-      currentTab = <About/>
+      currentTab = <About />
       break;
     }
     case 'Documentation': {

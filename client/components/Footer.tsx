@@ -3,7 +3,7 @@ import React from 'react'
 export default function Footer(props: Object) {
   const footerItems = [
     ['Github',"https://github.com/inquery-monitor/inquery-monitor-npm"],
-    ['Team', ""]
+    []
   ].map( (footerItem,id) => {
     return (
       <a href={footerItem[1]} style={{"textDecoration": "none"}}>

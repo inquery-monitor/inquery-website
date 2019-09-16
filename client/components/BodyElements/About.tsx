@@ -37,11 +37,10 @@ function About(){
          <span style={{color:'white', fontWeight:300}}>GraphQL with </span> <span style={{fontSize: '1.2em'}}>inQuery</span>
         </div>
         <p id = 'about-text'>
-          inQuery is an open-source GraphQL monitoring/analytics tool created in 2019 aimed to improve the developer experience around GraphQL.
-          <br /><br />
-          Launch inQuery in sandbox mode from the command line using the inquery-monitor-local npm module or use it in production through the inquery-monitor module.
-          <br /><br />
-          In development or during production, view the most important metrics of your GraphQL endpoint in realtime.
+        inQuery is an open-source GraphQL monitoring/analytics tool aimed to improve the ecosystem around GraphQL. 
+        Monitoring a GraphQL endpoint can be difficult, and costly; this is why our team decided to open source a product and make it available to the developer community. 
+          <br /><br /> 
+          With inQuery, developers can track their resolvers speed, time, and execution counts to see where the bottle neck in their applications are coming from. Currently we are in BETA release, and we are looking for any feedback to improve our product! 
         </p>
       </div>
       <h2>The Team</h2>
