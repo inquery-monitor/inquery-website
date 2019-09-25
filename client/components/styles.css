@@ -114,8 +114,9 @@ h2{
 
 
 #documentation-wrapper {
-  margin-top: 70px;
+  margin-top: 4em;
   width: 800px;
+  margin-bottom: 12em;
 }
 
 .documentation-text {
@@ -374,7 +375,7 @@ h2{
   background-color:white;
   flex-grow:1;
   margin-top: 2em;
-  margin-bottom: 2em;
+  margin-bottom: 4em;
   overflow:auto;
 }
 

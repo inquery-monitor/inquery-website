@@ -14,7 +14,7 @@ function Documentation(){
           </div>
         <h3 className = 'documentation-h3'>Step 2: Extract functions from the module.   </h3>
           <div className = 'code-snippet'>
-            <p className = 'code-text'><span style={{color:'rgb(175, 81, 188)'}}>const</span> &#123; <span style = {{color:'rgb(228, 69, 113)'}}>enableMonitoring</span>, <span style = {{color:'rgb(228, 69, 113)'}}>trackErrors</span> &#125;  =  <span style = {{color:'rgb(228, 69, 113)'}}>require</span>('inquery-monitor')</p>
+            <p className = 'code-text'><span style={{color:'rgb(175, 81, 188)'}}>const</span> &#123; <span style = {{color:'rgb(228, 69, 113)'}}>enableMonitoring</span> &#125;  =  <span style = {{color:'rgb(228, 69, 113)'}}>require</span>('inquery-monitor')</p>
           </div>
         <h3 className = 'documentation-h3'>Step 3: Pass in your resolvers as the first argument to enableMonitoring.</h3>
           <div className = 'code-snippet'>
