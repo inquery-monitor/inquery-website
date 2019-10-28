@@ -43,16 +43,5 @@ apiMiddleware.setApiKey = async (req, res, next) => {
   return next();
 }
 
-apiMiddleware.checkApiKey = (req, res, next) => {
-
-  
-  
-  // const apiKeyExists = await bcrypt.compare(req.body.apiKey, );
-  // if (!apiKeyExists) {
-  //   throw new Error('AccessID is incorrect');
-  // }
-
-  return next();
-}
 
 module.exports = apiMiddleware;
