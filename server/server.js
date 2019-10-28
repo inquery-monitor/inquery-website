@@ -9,7 +9,6 @@ const dynamoController = require('./controllers/dynamoController.js');
 
 app.use(express.json());
 app.use(cookieParser());
-// app.use(authMiddleware.checkJwt);
 
 
 // Serve static assets.
